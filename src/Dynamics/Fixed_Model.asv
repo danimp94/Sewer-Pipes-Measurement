@@ -58,12 +58,13 @@ y1 = [-t1/2         t1/2        t1/2        -t1/2];
 x2 = [l2x-(l2/2) l2x-(l2/2) l2x+(l2/2) l2x+(l2/2)];
 y2 = [-t2/2         t2/2        t2/2        -t2/2];
 
-R = [cos(phi),-sin(phi);sin(phi),cos(phi)]; % Rotation matrix
-     % c.g. after rotation by phi
-  x1 = x1*R; 
-  x2 = x2*R;
-  y1 = y1*R; 
-  y2 = y2*;
+% Animation i
+% R = [cos(phi);-sin(phi);sin(phi);cos(phi)]; % Rotation matrix
+%      % c.g. after rotation by phi
+%   x1 = x1*R; 
+%   x2 = x2*R;
+%   y1 = y1*R; 
+%   y2 = y2*R;
 
 
     % Plot the  system
@@ -80,12 +81,12 @@ hold on
 plot([x(1) x(2)], [y(1) y(2)]); % plt line conection between the points
 hold off
 
-    % Before rotation by phi
+    % Inital C.G.
  cg1 = [x(1) y(1)]; 
  cg2 = [x(2) y(2)];
  
 
-% Inertia for the axis of rotation
+    % Inertia for the axis of rotation
  I1 = (m1 * (t1^2 + l1^2))/12; % Rotational inertia of box 1 [Kg*m^2]
  I2 = (m2 * (t2^2 + l2^2))/12 + (m2 * l2x^2) ; % Rotational inertia of box 2 [Kg*m^2]
  

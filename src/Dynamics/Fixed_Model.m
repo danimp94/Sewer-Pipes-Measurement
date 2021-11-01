@@ -24,7 +24,7 @@ m3 = 0; % Mass of the stick (kg) --> Distributed in m1 and m2
 % Parameters needed:
 
 % Variables to control
-theta = 0; % Angle to stabilize the system ------
+theta = pi/2; % Angle to stabilize the system ------
 Fc = 1; % Force applied by servomotor --------
 
 hip = sqrt((t1/2)^2+(l1/2)^2) % hypotenuse for box 1
@@ -58,6 +58,7 @@ y1 = [-t1/2         t1/2        t1/2        -t1/2];
 x2 = [l2x-(l2/2) l2x-(l2/2) l2x+(l2/2) l2x+(l2/2)];
 y2 = [-t2/2         t2/2        t2/2        -t2/2];
 
+% Animation in function of the angle
 % R = [cos(phi);-sin(phi);sin(phi);cos(phi)]; % Rotation matrix
 %      % c.g. after rotation by phi
 %   x1 = x1*R; 
@@ -103,6 +104,7 @@ Ry = F1 + F2 - Fcy
 theta_dot_dot = (1/I)*((Fcx*ay) + (Fcy*bx) - (F2*l2x)*cos(theta))
 
 A = [];
+B = [];
 
 
 
