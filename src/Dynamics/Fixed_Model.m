@@ -24,7 +24,7 @@ m3 = 0; % Mass of the stick (kg) --> Distributed in m1 and m2
 % Parameters needed:
 
 % Variables to control
-theta = pi/2; % Angle to stabilize the system ------
+theta = 0.45; % Angle to stabilize the system ---------
 Fc = 1; % Force applied by servomotor --------
 
 hip = sqrt((t1/2)^2+(l1/2)^2) % hypotenuse for box 1
@@ -102,6 +102,15 @@ Ry = F1 + F2 - Fcy
 
 % Mz - Momentum equilibrium
 theta_dot_dot = (1/I)*((Fcx*ay) + (Fcy*bx) - (F2*l2x)*cos(theta))
+
+% small-angle approximations: #CHECK
+cos_theta_sa = (1-(theta^2/2));
+sin_theta_sa = theta;
+
+Fcx_sa = Fc *sin_theta_sa; % x component of servomotor force
+Fcy_sa = Fc *cos_theta_sa; % y component of servomotor force
+
+theta_dot_dot_approx = (1/I)*((Fcx_sa*ay) + (Fcy_sa*bx) - (F2*l2x)*cos_theta_sa)
 
 A = [];
 B = [];
