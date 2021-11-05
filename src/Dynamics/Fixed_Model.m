@@ -24,7 +24,7 @@ m3 = 0; % Mass of the stick (kg) --> Distributed in m1 and m2
 % Parameters needed:
 
 % Variables to control
-theta = 0.45; % Angle to stabilize the system ---------
+theta = 0.25; % Angle to stabilize the system ---------
 Fc = 1; % Force applied by servomotor --------
 
 hip = sqrt((t1/2)^2+(l1/2)^2) % hypotenuse for box 1
@@ -85,9 +85,8 @@ hold off
  cg1 = [x(1) y(1)]; 
  cg2 = [x(2) y(2)];
  
-
     % Inertia for the axis of rotation
- I1 = (m1 * (t1^2 + l1^2))/12; % Rotational inertia of box 1 [Kg*m^2]
+ I1 = (m1 * (t1^2 + l1^2))/11; % Rotational inertia of box 1 [Kg*m^2]
  I2 = (m2 * (t2^2 + l2^2))/12 + (m2 * l2x^2) ; % Rotational inertia of box 2 [Kg*m^2]
  
  I = I1 + I2; % Rotational Inertia #CHECK
@@ -103,17 +102,23 @@ Ry = F1 + F2 - Fcy
 % Mz - Momentum equilibrium
 theta_dot_dot = (1/I)*((Fcx*ay) + (Fcy*bx) - (F2*l2x)*cos(theta))
 
+% LINEARIZATION
 % small-angle approximations: #CHECK
-cos_theta_sa = (1-(theta^2/2));
+cos_theta_sa = 1; %cos_theta_sa = (1-(theta^2/2));
 sin_theta_sa = theta;
+
+linear_ay = (sin_theta_sa*cos(beta) - cos_theta_sa*sin(beta))*hip
+linear_bx = (cos_theta_sa*cos(beta) + sin_theta_sa*sin(beta))*hip
 
 Fcx_sa = Fc *sin_theta_sa; % x component of servomotor force
 Fcy_sa = Fc *cos_theta_sa; % y component of servomotor force
 
-theta_dot_dot_approx = (1/I)*((Fcx_sa*ay) + (Fcy_sa*bx) - (F2*l2x)*cos_theta_sa)
+theta_dot_dot_approx = (1/I)*((Fcx_sa*linear_ay) + (Fcy_sa*linear_bx) - (F2*l2x)*cos_theta_sa)
 
 A = [];
 B = [];
+
+
 
 
 
