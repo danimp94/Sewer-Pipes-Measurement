@@ -15,14 +15,9 @@ cfg = rs.config()
 cfg.enable_stream(rs.stream.depth)
 cfg.enable_stream(rs.stream.color)
 
-#align = rs.align(rs.stream.color)
-#aligned_frames = align.proccess(depth_and_color_frameset)
-#color_frame = aligned_frames.first(rs.stream.color)
-#aligned_depth_frame = aligned_frames.get_depth_frame()
 
 #Start streaming
 profile = pipe.start(cfg)
-
 
 # Filter generates color images based on input depth frame
 colorizer = rs.colorizer()
@@ -35,6 +30,17 @@ frameset = pipe.wait_for_frames()
 color_frame = frameset.get_color_frame()
 depth_frame = frameset.get_depth_frame()
 
+# Get intrinsic camera parameters
+profile = pipe.get_active_profile()
+print(profile)
+depth_profile = rs.video_stream_profile(profile.get_stream(rs.stream.depth))
+print(depth_profile)
+depth_intrinsics = depth_profile.get_intrinsics()
+print(depth_intrinsics)
+w, h = depth_intrinsics.width, depth_intrinsics.height
+print(w,h)
+
+
 # Cleanup
 pipe.stop()
 print("Frames Captured")
@@ -42,29 +48,12 @@ print("Frames Captured")
 # Convert images to numpy arrays
 depth_image = np.asanyarray(depth_frame.get_data())
 color_image = np.asanyarray(color_frame.get_data())
+depth_image = cv2.resize(depth_image, (1280, 720))
 
 imageio.imwrite("depth.png", depth_image)
 imageio.imwrite("rgb.png", color_image)
 print("Files saved")
 
-# display 2D-images
-#color = np.asanyarray(color_frame.get_data())
-#plt.rcParams["axes.grid"] = False
-#colorized_depth = np.asanyarray(colorizer.colorize(depth_frame).get_data())
-
-#plt.imshow(color)
-#plt.show
-#plt.savefig("rgb.png")
-
-#plt.subplot(1, 2, 1)
-#plt.title('rgb image')
-#plt.imshow(color)
-#plt.subplot(1, 2, 2)
-#plt.title('depth image')
-#plt.imshow(colorized_depth)
-#plt.show()
-#plt.savefig("rgb.png")
-#plt.savefig("depth.png")
 
 print("Create pointcloud...")
 color_raw = o3d.io.read_image("rgb.png")
@@ -82,7 +71,7 @@ plt.imshow(rgbd_image.depth)
 plt.show()
 
 p = o3d.camera.PinholeCameraIntrinsic()
-p.intrinsic_matrix=[[572.4114, 0.0, 325.2611], [ 0.0, 573.57043, 242.04899], [ 0.0, 0.0, 1.0]]
+p.intrinsic_matrix=[[421.139, 0.0, 426.176], [ 0.0, 421.139, 237.017], [ 0.0, 0.0, 1.0]]
 pcd = o3d.geometry.PointCloud.create_from_rgbd_image(
     rgbd_image,p)
 # Flip it, otherwise the pointcloud will be upside down
