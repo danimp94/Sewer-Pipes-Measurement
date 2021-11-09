@@ -17,8 +17,8 @@ l3o = 0.3; % Initial linear actuator lenght (m)
 l3x = l3o + 0.3; % Variable lenght of linear actuator (m) ----------
 l2x = (l1 + l2)/2 + l3x; % l2 in function of l3(x) (m)
 
-m1 = 4;   % Mass of box 1 (big box) (kg)
-m2 = 2;   % Mass of box 2 (little box) (kg)
+m1 = 4.5;   % Mass of box 1 (big box) (kg)
+m2 = 2.5;   % Mass of box 2 (little box) (kg)
 m3 = 0; % Mass of the stick (kg) --> Distributed in m1 and m2
 
 % Parameters needed:
@@ -113,6 +113,7 @@ linear_bx = (cos_theta_sa*cos(beta) + sin_theta_sa*sin(beta))*hip
 Fcx_sa = Fc *sin_theta_sa; % x component of servomotor force
 Fcy_sa = Fc *cos_theta_sa; % y component of servomotor force
 
+% Linearized model
 theta_dot_dot_approx = (1/I)*((Fcx_sa*linear_ay) + (Fcy_sa*linear_bx) - (F2*l2x)*cos_theta_sa)
 
 A = [];
