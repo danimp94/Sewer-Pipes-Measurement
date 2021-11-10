@@ -25,7 +25,7 @@ m3 = 0; % Mass of the stick (kg) --> Distributed in m1 and m2
 % Parameters needed:
 
 % Variables to control
-theta = 0.26; % Angle to stabilize the system ---------
+theta = 0; % Angle to stabilize the system ---------
 Fc = 1; % Force applied by servomotor --------
 
 hip = sqrt((t1/2)^2+(l1/2)^2) % hypotenuse for box 1
