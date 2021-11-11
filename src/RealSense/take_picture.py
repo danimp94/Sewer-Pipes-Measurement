@@ -6,8 +6,6 @@ import imageio
 import cv2
 print("Environment Ready")
 
-
-
 # Configure depth and color streams
 # Change resolution here
 pipe = rs.pipeline()
@@ -36,13 +34,7 @@ profile = pipe.get_active_profile()
 # Change the type of stereo vision
 device = profile.get_device()
 depth_sensor = device.query_sensors()[0]
-emitter = depth_sensor.get_option(rs.option.emitter_enabled)
-print("emitter = ", emitter)
-set_emitter = 0 #0 for active stereo vision, 1 for passive stereo vision
-depth_sensor.set_option(rs.option.emitter_enabled, set_emitter)
-emitter1 = depth_sensor.get_option(rs.option.emitter_enabled)
-print("new emitter = ", emitter1)
-
+depth_sensor.set_option(rs.option.emitter_enabled, 1)
 
 print(profile)
 depth_profile = rs.video_stream_profile(profile.get_stream(rs.stream.depth))
@@ -51,7 +43,6 @@ depth_intrinsics = depth_profile.get_intrinsics()
 print(depth_intrinsics)
 w, h = depth_intrinsics.width, depth_intrinsics.height
 print(w,h)
-
 
 # Cleanup
 pipe.stop()
