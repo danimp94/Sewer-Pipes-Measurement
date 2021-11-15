@@ -5,6 +5,7 @@ import open3d as o3d
 import imageio
 import cv2
 import pyransac3d as pyrsc
+from datetime import datetime as date
 print("Environment Ready")
 
 
@@ -12,8 +13,8 @@ print("Environment Ready")
 # Change resolution here
 pipe = rs.pipeline()
 cfg = rs.config()
-cfg.enable_stream(rs.stream.depth)
-cfg.enable_stream(rs.stream.color)
+cfg.enable_stream(rs.stream.depth, 848, 480)
+cfg.enable_stream(rs.stream.color, 848, 480)
 
 #Start streaming
 pipe.start(cfg)
@@ -24,11 +25,6 @@ colorizer = rs.colorizer()
 # Skip 5 first frames to give the Auto-Exposure time to adjust
 for x in range(5):pipe.wait_for_frames()
 
-# Store frameset
-frameset = pipe.wait_for_frames()
-color_frame = frameset.get_color_frame()
-depth_frame = frameset.get_depth_frame()
-
 # Get intrinsic camera parameters
 profile = pipe.get_active_profile()
 
@@ -37,10 +33,15 @@ device = profile.get_device()
 depth_sensor = device.query_sensors()[0]
 emitter = depth_sensor.get_option(rs.option.emitter_enabled)
 print("emitter = ", emitter)
-set_emitter = 0 #0 for active stereo vision, 1 for passive stereo vision
+set_emitter = 1
 depth_sensor.set_option(rs.option.emitter_enabled, set_emitter)
 emitter1 = depth_sensor.get_option(rs.option.emitter_enabled)
 print("new emitter = ", emitter1)
+
+# Store frameset
+frameset = pipe.wait_for_frames()
+color_frame = frameset.get_color_frame()
+depth_frame = frameset.get_depth_frame()
 
 print(profile)
 depth_profile = rs.video_stream_profile(profile.get_stream(rs.stream.depth))
@@ -58,43 +59,100 @@ print("Frames Captured")
 # Convert images to numpy arrays
 depth_image = np.asanyarray(depth_frame.get_data())
 color_image = np.asanyarray(color_frame.get_data())
-depth_image = cv2.resize(depth_image, (1280, 720))
-color_image = cv2.resize(color_image, (1280, 720))
+depth_image = cv2.resize(depth_image, (848, 480))
+color_image = cv2.resize(color_image, (848, 480))
 
-imageio.imwrite("depth.png", depth_image)
-imageio.imwrite("rgb.png", color_image)
+timestamp = date.now().strftime("%Y-%m-%d-%H-%M")
+imageio.imwrite("depth"+timestamp+".png", depth_image)
+imageio.imwrite("rgb"+timestamp+".png", color_image)
+print("Files saved")
+
+#Start streaming
+pipe.start(cfg)
+
+# Skip 5 first frames to give the Auto-Exposure time to adjust
+for x in range(5):pipe.wait_for_frames()
+
+# Get intrinsic camera parameters
+profile2 = pipe.get_active_profile()
+
+# Change the type of stereo vision
+device2 = profile2.get_device()
+depth_sensor2 = device2.query_sensors()[0]
+emitter = depth_sensor2.get_option(rs.option.emitter_enabled)
+print("emitter = ", emitter)
+set_emitter = 0
+depth_sensor2.set_option(rs.option.emitter_enabled, set_emitter)
+emitter1 = depth_sensor.get_option(rs.option.emitter_enabled)
+print("new emitter = ", emitter1)
+
+# Store frameset
+frameset2 = pipe.wait_for_frames()
+color_frame2 = frameset2.get_color_frame()
+depth_frame2 = frameset2.get_depth_frame()
+
+# Cleanup
+pipe.stop()
+print("Frames Captured")
+
+# Convert images to numpy arrays
+depth_image2 = np.asanyarray(depth_frame2.get_data())
+color_image2 = np.asanyarray(color_frame2.get_data())
+depth_image2 = cv2.resize(depth_image2, (848, 480))
+color_image2 = cv2.resize(color_image2, (848, 480))
+
+imageio.imwrite("depth2"+timestamp+".png", depth_image2)
+imageio.imwrite("rgb2"+timestamp+".png", color_image2)
 print("Files saved")
 
 
 print("Create pointcloud...")
 
-color_raw = o3d.io.read_image("rgb.png")
-depth_raw = o3d.io.read_image("depth.png")
+color_raw = o3d.io.read_image("rgb"+timestamp+".png")
+depth_raw = o3d.io.read_image("depth"+timestamp+".png")
 rgbd_image = o3d.geometry.RGBDImage.create_from_color_and_depth(
     color_raw, depth_raw, convert_rgb_to_intensity=False)
 print(rgbd_image)
 
-plt.subplot(1, 2, 1)
+
+color_raw2 = o3d.io.read_image("rgb2"+timestamp+".png")
+depth_raw2 = o3d.io.read_image("depth2"+timestamp+".png")
+rgbd_image2 = o3d.geometry.RGBDImage.create_from_color_and_depth(
+    color_raw2, depth_raw2, convert_rgb_to_intensity=False)
+
+plt.subplot(1, 4, 1)
 plt.title('RGB image')
 plt.imshow(rgbd_image.color)
-plt.subplot(1, 2, 2)
+plt.subplot(1, 4, 2)
 plt.title('Depth image')
 plt.imshow(rgbd_image.depth)
+plt.subplot(1, 4, 3)
+plt.title('RGB image2')
+plt.imshow(rgbd_image2.color)
+plt.subplot(1, 4, 4)
+plt.title('Depth image2')
+plt.imshow(rgbd_image2.depth)
 plt.show()
 
 p = o3d.camera.PinholeCameraIntrinsic(o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault)
 p.intrinsic_matrix=[[421.139, 0.0, 426.176], [ 0.0, 421.139, 237.017], [ 0.0, 0.0, 1.0]]
 pcd = o3d.geometry.PointCloud.create_from_rgbd_image(
     rgbd_image,p)
+pcd2 = o3d.geometry.PointCloud.create_from_rgbd_image(
+    rgbd_image2,p)
 
 # Flip it, otherwise the pointcloud will be upside down
 pcd.transform([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])
+pcd2.transform([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])
 # Save the point cloud
-o3d.io.write_point_cloud("cloud.ply", pcd)
+o3d.io.write_point_cloud("cloud"+timestamp+".ply", pcd)
+o3d.io.write_point_cloud("cloud2"+timestamp+".ply", pcd2)
 # Get back the point cloud
-pcd_load = o3d.io.read_point_cloud("cloud.ply")
+pcd_load = o3d.io.read_point_cloud("cloud"+timestamp+".ply")
+pcd_load2 = o3d.io.read_point_cloud("cloud2"+timestamp+".ply")
 # Visualize the point cloud
 o3d.visualization.draw_geometries([pcd])
+o3d.visualization.draw_geometries([pcd2])
 
 # open3d librairie to use RANSAC for a circular shape
 circ = pyrsc.Circle()
