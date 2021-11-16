@@ -153,8 +153,7 @@ o3d.io.write_point_cloud("cloud2"+timestamp+".ply", pcd2)
 pcd_load = o3d.io.read_point_cloud("cloud"+timestamp+".ply")
 pcd_load2 = o3d.io.read_point_cloud("cloud2"+timestamp+".ply")
 # Visualize the point cloud
-o3d.visualization.draw_geometries([pcd])
-o3d.visualization.draw_geometries([pcd2])
+o3d.visualization.draw_geometries([pcd_load,pcd_load2])
 
 # open3d librairie to use RANSAC for a circular shape
 circ = pyrsc.Circle()
