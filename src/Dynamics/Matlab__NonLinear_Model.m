@@ -14,16 +14,16 @@ l2 = 0.2; % lenght of box 2 (m)
 w2 = 0.15; % widht of box 2 (m)
 
 % IT SHOULD BE ON f(x)
-l3o = 0.3; % Initial linear actuator lenght (m)
-l3f = l3o + 0.3; % Max lenght of linear actuator (m)
-l2x = (l1 + l2)/2 + l3f + l3o; % Min distance from rotation to c.g box 2(m)
+l3o = 0.15; % Initial linear actuator lenght (m)
+l3f = l3o + 0.15; % Max lenght of linear actuator (m)
+l2x = (l1 + l2)/2 + l3f; % Max distance from rotation to c.g box 2(m)
 
-m1 = 4.5;   % Mass of box 1 (big box) (kg)
-m2 = 2.5;   % Mass of box 2 (little box) (kg)
+m1 = 4;   % Mass of box 1 (big box) (kg)
+m2 = 1.5;   % Mass of box 2 (little box) (kg)
 m3 = 0; % Mass of the stick (kg) --> Distributed in m1 and m2
 
 % Rotational Friction (viscosity)
-Br = 20; % Rotational Friction constant
+Br = 0.5; % Rotational Friction constant
 
 % Parameters needed:
 
@@ -55,40 +55,6 @@ F2 = -m2 * g;
 F3 = -m3 * g;
 
 % INERTIA
-
-%     % Centroid of the 2 bodies (at initial point)
-%     % Define coordinates of both masses
-% x1 = [-l1/2        -l1/2        l1/2         l1/2];
-% y1 = [-t1/2         t1/2        t1/2        -t1/2];
-% x2 = [l2x-(l2/2) l2x-(l2/2) l2x+(l2/2) l2x+(l2/2)];
-% y2 = [-t2/2         t2/2        t2/2        -t2/2];
-% 
-% % Animation in function of the angle
-% % R = [cos(phi);-sin(phi);sin(phi);cos(phi)]; % Rotation matrix
-% %      % c.g. after rotation by phi
-% %   x1 = x1*R; 
-% %   x2 = x2*R;
-% %   y1 = y1*R; 
-% %   y2 = y2*R;
-% 
-% 
-%     % Plot the  system
-% polyin = polyshape({x1,x2},{y1,y2}); % plt both shapes
-% [x,y] = centroid(polyin); % Calculate centroid of both masses
-% plot(polyin)
-% hold on
-% plot(x,y,'r*')
-% [x,y] = centroid(polyin,[1 2]); %plt centroid of system
-% plot(polyin)
-% hold on
-% plot(x(1),y(1),'r*',x(2),y(2),'r*'); %plt centroid for each body
-% hold on
-% plot([x(1) x(2)], [y(1) y(2)]); % plt line conection between the points
-% hold off
-% 
-%     % Inital C.G.
-%  cg1 = [x(1) y(1)]; 
-%  cg2 = [x(2) y(2)];
  
     % Inertia for the axis of rotation
  I1 = (m1 * (t1^2 + l1^2))/12; % Rotational inertia of box 1 [Kg*m^2]
@@ -107,24 +73,11 @@ Ry = F1 + F2 - Fcy
 % Mz - Momentum equilibrium
 theta_dot_dot = (1/I)*((Fcx*ay) + (Fcy*bx) - (F2*l2x)*cos(theta))
 
-% LINEARIZATION
-% small-angle approximations: 
-cos_theta_sa = 1; %cos_theta_sa = (1-(theta^2/2));
-sin_theta_sa = theta;
-
-linear_ay = (sin_theta_sa*cos(beta) - cos_theta_sa*sin(beta))*hip;
-linear_bx = (cos_theta_sa*cos(beta) + sin_theta_sa*sin(beta))*hip;
-
-Fcx_sa = Fc *sin_theta_sa; % x component of servomotor force
-Fcy_sa = Fc *cos_theta_sa; % y component of servomotor force
-
-% Linearized model
-theta_dot_dot_approx = (1/I)*((Fcx_sa*linear_ay) + (Fcy_sa*linear_bx) - (F2*l2x)*cos_theta_sa)
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Simulink Parameters 
-M2 = (F2*l2x); % M2 Torque
-H = hip * cos(-beta); % u = Fc * H
+M2 = (F2*l2x*cos(theta)); % M2 Torque
+FC = (Fcx*ay) + (Fcy*bx);
+H = (hip * cos(-beta));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Simple model (l3d does not change => I constant)
