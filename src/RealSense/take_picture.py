@@ -13,7 +13,7 @@ print("Environment Ready")
 # Change resolution here
 pipe = rs.pipeline()
 cfg = rs.config()
-cfg.enable_stream(rs.stream.depth, 848, 480)
+cfg.enable_stream(rs.stream.depth,848, 480)
 cfg.enable_stream(rs.stream.color, 848, 480)
 
 #Start streaming
@@ -33,7 +33,7 @@ device = profile.get_device()
 depth_sensor = device.query_sensors()[0]
 emitter = depth_sensor.get_option(rs.option.emitter_enabled)
 print("emitter = ", emitter)
-set_emitter = 1
+set_emitter = 1.0
 depth_sensor.set_option(rs.option.emitter_enabled, set_emitter)
 emitter1 = depth_sensor.get_option(rs.option.emitter_enabled)
 print("new emitter = ", emitter1)
@@ -81,7 +81,7 @@ device2 = profile2.get_device()
 depth_sensor2 = device2.query_sensors()[0]
 emitter = depth_sensor2.get_option(rs.option.emitter_enabled)
 print("emitter = ", emitter)
-set_emitter = 0
+set_emitter = 0.0
 depth_sensor2.set_option(rs.option.emitter_enabled, set_emitter)
 emitter1 = depth_sensor.get_option(rs.option.emitter_enabled)
 print("new emitter = ", emitter1)
@@ -135,7 +135,9 @@ plt.imshow(rgbd_image2.depth)
 plt.show()
 
 p = o3d.camera.PinholeCameraIntrinsic(o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault)
-p.intrinsic_matrix=[[421.139, 0.0, 426.176], [ 0.0, 421.139, 237.017], [ 0.0, 0.0, 1.0]]
+p.intrinsic_matrix=[[421.139, 0.0, 426.176], [ 0.0, 421.139, 237.017], [ 0.0, 0.0, 1.0]] # 848*480 resolution
+#p.intrinsic_matrix=[[635.682, 0.0, 643.285], [ 0.0, 635.682, 355.427], [ 0.0, 0.0, 1.0]] #1280*720 resolution
+#p.intrinsic_matrix=[[381.409, 0.0, 321.971], [ 0.0, 381.409, 237.298], [ 0.0, 0.0, 1.0]] #640*480 resolution
 pcd = o3d.geometry.PointCloud.create_from_rgbd_image(
     rgbd_image,p)
 pcd2 = o3d.geometry.PointCloud.create_from_rgbd_image(
