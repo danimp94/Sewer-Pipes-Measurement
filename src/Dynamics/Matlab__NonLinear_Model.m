@@ -23,7 +23,7 @@ m2 = 1.5;   % Mass of box 2 (little box) (kg)
 m3 = 0; % Mass of the stick (kg) --> Distributed in m1 and m2
 
 % Rotational Friction (viscosity)
-Br = 0.5; % Rotational Friction constant
+Br = 5; % Rotational Friction constant
 
 % Parameters needed:
 
