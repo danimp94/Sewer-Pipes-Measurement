@@ -3,8 +3,10 @@ import open3d as o3d
 import pyransac3d as pyrsc
 from datetime import datetime as date
 
+timestamp = date.now().strftime("%Y-%m-%d-%H-%M")
+
 # Get back the point cloud
-pcd_load = o3d.io.read_point_cloud("mcloud.ply")
+pcd_load = o3d.io.read_point_cloud("merge_cloud"+timestamp+".ply")
 
 # open3d librairie to use RANSAC for a circular shape
 circ = pyrsc.Circle()
@@ -38,7 +40,6 @@ rans = o3d.geometry.PointCloud()
 rans.points = o3d.utility.Vector3dVector(rans_np)
 rans.colors = o3d.utility.Vector3dVector(rans_color)
 # Save the inlier and outlier point cloud
-timestamp = date.now().strftime("%Y-%m-%d-%H-%M")
 o3d.io.write_point_cloud("ransac_cloud"+timestamp+".ply", rans)
 # Get back the inlier and outlier point cloud
 rans_load = o3d.io.read_point_cloud("ransac_cloud"+timestamp+".ply")
