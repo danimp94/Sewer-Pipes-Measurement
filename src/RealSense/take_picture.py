@@ -1,11 +1,11 @@
-import numpy as np                        # fundamental package for scientific computing
+import numpy as np                        # Fundamental package for scientific computing
 import matplotlib.pyplot as plt           # 2D plotting library producing publication quality figures
 import pyrealsense2.pyrealsense2 as rs    # Intel RealSense cross-platform open-source API
 import open3d as o3d
 import imageio
 import cv2
-import pyransac3d as pyrsc
-from datetime import datetime as date
+import pyransac3d as pyrsc                # open3d librairie to use RANSAC for different shapes
+from datetime import datetime as date     # Library use to get the actual date and time
 print("Environment Ready")
 
 
@@ -43,6 +43,7 @@ frameset = pipe.wait_for_frames()
 color_frame = frameset.get_color_frame()
 depth_frame = frameset.get_depth_frame()
 
+# Collect some datas about the camera
 print(profile)
 depth_profile = rs.video_stream_profile(profile.get_stream(rs.stream.depth))
 print(depth_profile)
@@ -59,10 +60,13 @@ print("Frames Captured")
 # Convert images to numpy arrays
 depth_image = np.asanyarray(depth_frame.get_data())
 color_image = np.asanyarray(color_frame.get_data())
+# Resize the images so that they have the same size
 depth_image = cv2.resize(depth_image, (848, 480))
 color_image = cv2.resize(color_image, (848, 480))
 
+# Collect the actual date and time
 timestamp = date.now().strftime("%Y-%m-%d-%H-%M")
+# save both images (the name is changed each time using the timestamp in order to save all the images)
 imageio.imwrite("depth"+timestamp+".png", depth_image)
 imageio.imwrite("rgb"+timestamp+".png", color_image)
 print("Files saved")
@@ -98,9 +102,11 @@ print("Frames Captured")
 # Convert images to numpy arrays
 depth_image2 = np.asanyarray(depth_frame2.get_data())
 color_image2 = np.asanyarray(color_frame2.get_data())
+# Resize the images so that they have the same size
 depth_image2 = cv2.resize(depth_image2, (848, 480))
 color_image2 = cv2.resize(color_image2, (848, 480))
 
+# save both images (the name is changed each time using the timestamp in order to save all the images)
 imageio.imwrite("depth2"+timestamp+".png", depth_image2)
 imageio.imwrite("rgb2"+timestamp+".png", color_image2)
 print("Files saved")
@@ -108,18 +114,22 @@ print("Files saved")
 
 print("Create pointcloud...")
 
+# Get back the images
 color_raw = o3d.io.read_image("rgb"+timestamp+".png")
 depth_raw = o3d.io.read_image("depth"+timestamp+".png")
+# Create the RGBD image using the RGB and depth images
 rgbd_image = o3d.geometry.RGBDImage.create_from_color_and_depth(
     color_raw, depth_raw, convert_rgb_to_intensity=False)
 print(rgbd_image)
 
-
+# Get back the images
 color_raw2 = o3d.io.read_image("rgb2"+timestamp+".png")
 depth_raw2 = o3d.io.read_image("depth2"+timestamp+".png")
+# Create the RGBD image using the RGB and depth images
 rgbd_image2 = o3d.geometry.RGBDImage.create_from_color_and_depth(
     color_raw2, depth_raw2, convert_rgb_to_intensity=False)
 
+# Draw the RGB and depth image for passive and active mode
 plt.subplot(1, 4, 1)
 plt.title('RGB image')
 plt.imshow(rgbd_image.color)
@@ -134,16 +144,19 @@ plt.title('Depth image2')
 plt.imshow(rgbd_image2.depth)
 plt.show()
 
+# Get the default intrinsic parameters of the camera
 p = o3d.camera.PinholeCameraIntrinsic(o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault)
+# Change the intrinsic parameters of the camera to match the chosen resolution
 p.intrinsic_matrix=[[421.139, 0.0, 426.176], [ 0.0, 421.139, 237.017], [ 0.0, 0.0, 1.0]] # 848*480 resolution
 #p.intrinsic_matrix=[[635.682, 0.0, 643.285], [ 0.0, 635.682, 355.427], [ 0.0, 0.0, 1.0]] #1280*720 resolution
 #p.intrinsic_matrix=[[381.409, 0.0, 321.971], [ 0.0, 381.409, 237.298], [ 0.0, 0.0, 1.0]] #640*480 resolution
+# Create the point cloud from the rgbd image
 pcd = o3d.geometry.PointCloud.create_from_rgbd_image(
     rgbd_image,p)
 pcd2 = o3d.geometry.PointCloud.create_from_rgbd_image(
     rgbd_image2,p)
 
-# Flip it, otherwise the pointcloud will be upside down
+# Flip itthe point cloud, otherwise it will be upside down
 pcd.transform([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])
 pcd2.transform([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])
 # Save the point cloud
