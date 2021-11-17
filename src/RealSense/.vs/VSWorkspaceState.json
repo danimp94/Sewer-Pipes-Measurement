@@ -1,9 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\DarkLab_test",
-    "\\DarkLab_test\\01"
+    ""
   ],
-  "SelectedNode": "\\DarkLab_test\\01\\RANSAC.py",
+  "SelectedNode": "\\RANSAC.py",
   "PreviewInSolutionExplorer": false
 }
