@@ -50,9 +50,11 @@ I = I1 + I2; % Rotational Inertia
 % Matrices Definition
 A = [0 1 ; 0 -Br/I]; 
 B = [0 0 ; -F2/I 1];
-C = [1 0];
-D = [0 0];
+B = [B(:,2)];
 
+C = [1 1];
+D = [0 0];
+D = 0; 
 eig(A);
 
 % Check controllability
@@ -67,16 +69,18 @@ n = length(A);
 
 x0 = [pi/2;0];
 
+
 % LQR
 Q = eye(size(C,2))*10;
 % Q(1,1) = 1;
-Q(2,2) = 0;
+% Q(2,2) = 0;
 R = 2;
 K = lqr(A,B,Q,R);
 
 % Closed loop system
 Ac = [(A-B*K)];
 Bc = [B];
+
 Cc = [C];
 Dc = [D];
 
