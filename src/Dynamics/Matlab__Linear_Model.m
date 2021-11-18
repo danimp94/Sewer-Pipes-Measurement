@@ -6,20 +6,20 @@ g = 9.81; % Gravity constant
 
 % Box dimensions
 t1 = 0.2; % height of box 1 (m)
-l1 = 0.35; % lenght of box 1 (m)
+l1 = 0.3; % lenght of box 1 (m)
 w1 = 0.2; % widht of box 1 (m)
 
 t2 = 0.12; % height of box 2 (m)
-l2 = 0.2; % lenght of box 2 (m)
+l2 = 0.1; % lenght of box 2 (m)
 w2 = 0.15; % widht of box 2 (m)
 
 % IT SHOULD BE ON f(x)
-l3o = 0.3; % Initial linear actuator lenght (m)
-l3f = l3o + 0.3; % Max lenght of linear actuator (m)
+l3o = 0.15; % Initial linear actuator lenght (m)
+l3f = l3o + 0.15; % Max lenght of linear actuator (m)
 l2x = (l1 + l2)/2 + l3f + l3o; % Min distance from rotation to c.g box 2(m)
 
-m1 = 4.5;   % Mass of box 1 (big box) (kg)
-m2 = 2.5;   % Mass of box 2 (little box) (kg)
+m1 = 4;   % Mass of box 1 (big box) (kg)
+m2 = 2;   % Mass of box 2 (little box) (kg)
 m3 = 0; % Mass of the stick (kg) --> Distributed in m1 and m2
 
 % Rotational Friction (viscosity)
@@ -124,14 +124,17 @@ theta_dot_dot_approx = (1/I)*((Fcx_sa*linear_ay) + (Fcy_sa*linear_bx) - (F2*l2x)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Simulink Parameters 
 M2 = (F2*l2x); % M2 Torque
-H = hip * cos(-beta); % u = Fc * H
+H = hip * cos(-beta); % u = Fc * H CHECK
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Simple model (l3d does not change => I constant)
 % Matrices Definition
-A = [0 1 ; 0 Br/I]; % F2*theta*l2x/2I
-B = [0 0 ; -H/I -l2x/I];
+A = [0 1 ; 0 Br/I]; 
+B = [0 0 ; 1/I -l2x/I];
 C = [1 0];
+D = [0 0];
+
+eig(A);
 
 % Check controllability
 controllability =['Check Controllability = ',num2str(rank(ctrb(A,B)))];
@@ -143,39 +146,44 @@ n = length(A);
 % Output matrix
 %C = eye(length(A));
 
-% Open loop system
-sys_ol = ss(A,B,C,0);
-
-% Simulate open loop system
 x0 = [pi/2;0];
-figure
-initial(sys_ol,x0)
 
-
-% LQR 1
-Q1 = eye(n)*100;
-R1 = 2;
-K1 = -lqr(A,B,Q1,R1);
-
-% LQR 2
-Q2 = eye(n)*100;
-R2 = 1;
-K2 = -lqr(A,B,Q2,R2);
+% LQR
+Q = eye(size(C,2))*10;
+% Q(1,1) = 1;
+Q(2,2) = 0;
+R = 2;
+K = lqr(A,B,Q,R);
 
 % Closed loop system
-Acl1 = A+B*K1;
-Acl2 = A+B*K2;
+Ac = [(A-B*K)];
+Bc = [B];
+Cc = [C];
+Dc = [D];
 
-sys_cl1 = ss(Acl1,zeros(n,1),C,0);
-sys_cl2 = ss(Acl2,zeros(n,1),C,0);
+eig(Ac)
+
+sys_cl = ss(Ac,Bc,Cc,Dc);
+
+% Simulate closed-loop system
+figure
+initial(sys_cl,x0)
+legend('LQR_Initial_conditions')
+
+t = 0:0.2:10;
+
+% r =0.2 * ones(size(t));
+% [y,t,x]=lsim(sys_cl,r,t);
+% [AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
+% set(get(AX(1),'Ylabel'),'String','cart position (m)')
+% set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)')
 
 figure
-initial(sys_cl1,x0)
-hold on
-initial(sys_cl2,x0)
-legend('LQR_1','LQR_2')
+step(sys_cl,t)
+title('Step Response with LQR Control')
+%legend('LQR_step_response')
 
-
+% MPC ??
 
 
 
