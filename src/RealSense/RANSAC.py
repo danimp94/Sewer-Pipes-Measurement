@@ -6,7 +6,7 @@ from datetime import datetime as date
 timestamp = date.now().strftime("%Y-%m-%d-%H-%M")
 
 # Get back the point cloud
-pcd_load = o3d.io.read_point_cloud("merge_cloud.ply")
+pcd_load = o3d.io.read_point_cloud("cloud.ply")
 
 # open3d librairie to use RANSAC for a circular shape
 circ = pyrsc.Circle()
