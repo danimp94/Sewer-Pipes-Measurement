@@ -50,16 +50,15 @@ I = I1 + I2; % Rotational Inertia
 % Matrices Definition
 A = [0 1 ; 0 -Br/I]; 
 B = [0 0 ; F2/I 1];
-B = [0 ;1];
 %B = [B(:,2)];
 
 C = [1 1];
-D = 0;
+D = [0 0];
  
 eig(A);
 
 % Check controllability
-controllability =['Check Controllability = ',num2str(rank(ctrb(A,B)))];
+controllability =['Check Controllability = ',num2str(rank(ctrb(A,B(:,2))))];
 disp(controllability)
 
 % Number of states 
@@ -69,10 +68,10 @@ n = length(A);
 %C = eye(length(A));
 
 x0 = [pi/8;0];
-u0 = [-m2*g*(l2f+l3o-l3f)]
+u0 = [m2*g*l2f
 
 % LQR
-Q = eye(size(C,1))*1;
+Q = eye(size(C,2))*2;
 %Q(1,1) = 1e-6;
 %Q(2,2) = 1e-6;
 %Q = C'*C;

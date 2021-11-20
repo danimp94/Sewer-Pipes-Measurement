@@ -49,12 +49,11 @@ I = I1 + I2; % Rotational Inertia
 % Simple model (l2c variable but I constant)
 % Matrices Definition
 A = [0 1 ; 0 -Br/I]; 
-B = [0 0 ; F2/I 1];
 B = [0 ;1];
 %B = [B(:,2)];
 
-C = [1 1];
-D = 0;
+C = [1 0];
+D = [0];
  
 eig(A);
 
@@ -68,8 +67,8 @@ n = length(A);
 % Output matrix
 %C = eye(length(A));
 
-x0 = [pi/8;0];
-u0 = [-m2*g*(l2f+l3o-l3f)]
+x0 = [pi/2;0];
+
 
 % LQR
 Q = eye(size(C,1))*1;
