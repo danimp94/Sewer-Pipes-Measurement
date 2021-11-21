@@ -58,17 +58,12 @@ D = 0;
  
 eig(A);
 
-% Check controllability
-controllability =['Check Controllability = ',num2str(rank(ctrb(A,B)))];
-disp(controllability)
-
 % Number of states 
 n = length(A);
 
 % Output matrix
-%C = eye(length(A));
 
-x0 = [pi/8;0]; % Initial conditions
+x0 = [pi/4;0]; % Initial conditions
 u0 = [-m2*g*(l2f+l3o-l3f)] % Initial Input
 
 % LQR
@@ -85,29 +80,10 @@ Bc = [B];
 Cc = [C];
 Dc = [D];
 
-eig(Ac)
+eig(Ac);
 
 sys_cl = ss(Ac,Bc,Cc,Dc);
 
-% Simulate closed-loop system
-figure
-initial(sys_cl,x0)
-legend('LQR_Initial_conditions')
-
-t = 0:0.1:20;
-
-% r =0.2 * ones(size(t));
-% [y,t,x]=lsim(sys_cl,r,t);
-% [AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
-% set(get(AX(1),'Ylabel'),'String','cart position (m)')
-% set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)')
-
-figure
-step(sys_cl,t)
-title('Step Response with LQR Control')
-%legend('LQR_step_response')
-
-% MPC ??
 
 
 
