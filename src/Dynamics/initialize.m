@@ -10,21 +10,18 @@ l1 = 0.3; % lenght of box 1 (m)
 w1 = 0.2; % widht of box 1 (m)
 
 t2 = 0.12; % height of box 2 (m)
-l2 = 0.1; % lenght of box 2 (m)
-w2 = 0.15; % widht of box 2 (m)
+l2 = 0.04; % lenght of box 2 (m)
+w2 = 0.065; % widht of box 2 (m)
 
 % Box Weights
-m1 = 4;   % Mass of box 1 (big box) (kg)
-m2 = 1.4;   % Mass of box 2 (little box) (kg)
-m3 = 0; % Mass of the stick (kg) --> Distributed in m1 and m2
+m3 = 0.6; % Mass of the stick (kg) --> Distributed in m1 and m2
+m1 = 3.5 + m3*0.7;   % Mass of box 1 (big box) (kg)
+m2 = 0.72 + 0.8 + m3*0.3;   % Mass of box 2 (little box) (kg) 0.72kg camera + 0.8kg light + actuator
 
 % Rotational Friction (viscosity)
-Br = 2; % Rotational Friction constant
+Br = 1.5; % Rotational Friction constant
 
 % Parameters needed:
-
-% Variables to control
-theta = 0; % Angle to stabilize the system ---------
 
 % IT SHOULD BE ON f(x)
 l3o = 0.15; % Initial linear actuator lenght (m)
@@ -34,7 +31,7 @@ l2f = (l1 + l2)/2 + l3f + l3o; % Max distance from rotation to c.g box 2(m)
 % Gravity forces
 F1 = -m1 * g;
 F2 = -m2 * g;
-F3 = -m3 * g;
+%F3 = -m3 * g;
 
 % Inertia for the axis of rotation
 I1 = (m1 * (t1^2 + l1^2))/12; % Rotational inertia of box 1 [Kg*m^2]
@@ -49,10 +46,9 @@ I = I1 + I2; % Rotational Inertia
 % Simple model (l2c variable but I constant)
 % Matrices Definition
 A = [0 1 ; 0 -Br/I]; 
-B = [0 0 ; F2/I 1];
-B = [0 ;1];
-%B = [B(:,2)];
-
+B = [0 0 ; F2/I 1/I];
+%B = [0 ;1/I];
+B = [B(:,2)];
 C = [1 0];
 D = 0;
  
@@ -67,11 +63,10 @@ x0 = [pi/4;0]; % Initial conditions
 u0 = [-m2*g*(l2f+l3o-l3f)] % Initial Input
 
 % LQR
-Q = eye(size(C,1))*1;
-%Q(1,1) = 1e-6;
-%Q(2,2) = 1e-6;
-%Q = C'*C;
-R = 1;
+%Q = eye(size(C,1))*1;
+Q = [1 0;  % Penalize angular error
+     0 4]; % Penalize angular rate
+R = 2;     % Penalize thruster effort
 K = lqr(A,B,Q,R);
 
 % Closed loop system
