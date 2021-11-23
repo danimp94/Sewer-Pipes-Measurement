@@ -6,7 +6,7 @@ from datetime import datetime as date
 timestamp = date.now().strftime("%Y-%m-%d-%H-%M")
 
 # Get back the point cloud
-pcd_load = o3d.io.read_point_cloud("cloud.ply")
+pcd_load = o3d.io.read_point_cloud("cloud_15cm.ply")
 
 # open3d librairie to use RANSAC for a circular shape
 circ = pyrsc.Circle()
@@ -14,7 +14,7 @@ circ = pyrsc.Circle()
 # convert Open3D.o3d.geometry.PointCloud to numpy array (RANSAC needs a numpy array to work)
 xyz_load = np.asarray(pcd_load.points)
 # RANSAC implementation for circular shape detection in point clouds
-center, axis, radius, inliers = circ.fit(xyz_load, thresh=0.02, maxIteration=500)
+center, axis, radius, inliers = circ.fit(xyz_load, thresh=0.1, maxIteration=500)
 print(radius*2000)
 
 # Select the inliers and the outliers points
@@ -40,8 +40,8 @@ rans = o3d.geometry.PointCloud()
 rans.points = o3d.utility.Vector3dVector(rans_np)
 rans.colors = o3d.utility.Vector3dVector(rans_color)
 # Save the inlier and outlier point cloud
-o3d.io.write_point_cloud("ransac_cloud"+timestamp+".ply", rans)
+o3d.io.write_point_cloud("ransac_cloud_15cm"+timestamp+".ply", rans)
 # Get back the inlier and outlier point cloud
-rans_load = o3d.io.read_point_cloud("ransac_cloud"+timestamp+".ply")
+rans_load = o3d.io.read_point_cloud("ransac_cloud_15cm"+timestamp+".ply")
 # Visualize the inlier and outlier point clouds
 o3d.visualization.draw_geometries([rans_load])
