@@ -93,12 +93,10 @@ eig(Ac)
 % % OBSERVER
 % % Place full observer poles at (-9,-12)
 % q = [-9 -12]
-% 
 % L = place(A',C',q).'
 % sys2 = ss(A'-C'*L',B,C,0)
 % eig(A'-C'*L')
 
-sys_cl = ss(Ac,Bc,Cc,Dc);
 
 % Simulate closed-loop system
 figure
