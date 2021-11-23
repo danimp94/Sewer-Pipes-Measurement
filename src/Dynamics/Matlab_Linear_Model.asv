@@ -19,15 +19,14 @@ m2 = 1.4;   % Mass of box 2 (little box) (kg)
 m3 = 0; % Mass of the stick (kg) --> Distributed in m1 and m2
 
 % Rotational Friction (viscosity)
-Br = 1.5; % Rotational Friction constant
+Br = 2; % Rotational Friction constant
 
 % Parameters needed:
 
 % Variables to control
 theta = 0; % Angle to stabilize the system ---------
 
-l1o = 0.07 % Distance from the center of mass of big box to the axis of rotation
-
+% IT SHOULD BE ON f(x)
 l3o = 0.15; % Initial linear actuator lenght (m)
 l3f = l3o + 0.15; % Max lenght of linear actuator (m)
 l2f = (l1 + l2)/2 + l3f + l3o; % Max distance from rotation to c.g box 2(m)                   
@@ -38,7 +37,7 @@ F2 = -m2 * g;
 F3 = -m3 * g;
 
 % Inertia for the axis of rotation
-
+l10 = 7
 I1 = (m1 * (t1^2 + l1^2))/12 + (m1 * (l1o)^2); % Rotational inertia of box 1 [Kg*m^2]
 I2 = (m2 * (t2^2 + l2^2))/12 + (m2 * (l2f)^2) ; % Rotational inertia of box 2 [Kg*m^2]
  
