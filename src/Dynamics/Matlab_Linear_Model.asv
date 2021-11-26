@@ -114,30 +114,21 @@ title('Step Response with LQR Control')
 
 %%
 % open loop bode diagram
-% bode(sys,[0.1 1])
-% grid on
+bode(sys,[0.1 1])
+grid on
 
 [Gm, Pm, Wcg,Wcp] = margin(sys)
 
 Ts_bode = (20*Wcp)^-1;
-% which diagram? bode, nichols, nyquist?
-% which frequency needs to be taken? cross pulsation or oscillation
-% pulsation
-% which are the  units for "20"?
 
-sysclosed = feedback(sys,1)
-sysd = c2d(sys,3);
-figure(1);clf;
-step(sysd)
-hold on 
-step(sysclosed)
-legend({'dis' 'cont'})
+sysd = c2d(sys,0.5)
 
 
-figure(2);clf;
-nichols(sys)
-hold on
-nichols(sysd)
+
+
+
+
+
 
 
 
