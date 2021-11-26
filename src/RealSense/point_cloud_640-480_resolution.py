@@ -174,10 +174,11 @@ circ = pyrsc.Circle()
 xyz_load = np.asarray(pcd_load2.points)
 # RANSAC implementation for circular shape detection in point clouds
 center, axis, radius, inliers = circ.fit(xyz_load, thresh=0.1, maxIteration=2)
+print(radius*2000)
 
 # Select the inliers and the outliers points
-inlier_cloud = pcds_load.select_by_index(inliers)
-outlier_cloud = pcds_load.select_by_index(inliers, invert=True)
+inlier_cloud = pcd_load2.select_by_index(inliers)
+outlier_cloud = pcd_load2.select_by_index(inliers, invert=True)
 
 # Paint the inliers points in red and the rest in grey
 inlier_cloud.paint_uniform_color([1, 0, 0])

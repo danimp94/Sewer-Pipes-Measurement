@@ -8,18 +8,20 @@ timestamp = date.now().strftime("%Y-%m-%d-%H-%M")
 # Get back the point cloud
 pcd_load = o3d.io.read_point_cloud("cloud.ply")
 
+pcd_imp = o3d.geometry.PointCloud.remove_non_finite_points(pcd_load)
+
 # open3d librairie to use RANSAC for a circular shape
 circ = pyrsc.Circle()
 
 # convert Open3D.o3d.geometry.PointCloud to numpy array (RANSAC needs a numpy array to work)
-xyz_load = np.asarray(pcd_load.points)
+xyz_load = np.asarray(pcd_imp.points)
 # RANSAC implementation for circular shape detection in point clouds
 center, axis, radius, inliers = circ.fit(xyz_load, thresh=0.05, maxIteration=300)
 print(radius*2000)
 
 # Select the inliers and the outliers points
-inlier_cloud = pcd_load.select_by_index(inliers)
-outlier_cloud = pcd_load.select_by_index(inliers, invert=True)
+inlier_cloud = pcd_imp.select_by_index(inliers)
+outlier_cloud = pcd_imp.select_by_index(inliers, invert=True)
 
 # Paint the inliers points in red and the rest in grey
 inlier_cloud.paint_uniform_color([1, 0, 0])
