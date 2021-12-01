@@ -99,45 +99,77 @@ eig(Ac)
 sys = ss(A,B,C,D)
 sys_cl= ss(Ac,Bc,Cc,Dc)
 
-% Simulate closed-loop system
-figure
-initial(sys_cl,x0)
-legend('LQR_Initial_conditions')
-
-t = 0:0.1:20;
-
-figure
-step(sys_cl,t)
-title('Step Response with LQR Control')
-%legend('LQR_step_response')
+% % Simulate closed-loop system
+% figure
+% initial(sys_cl,x0)
+% legend('LQR_Initial_conditions')
+% 
+% t = 0:0.1:20;
+% 
+% figure
+% step(sys_cl,t)
+% title('Step Response with LQR Control')
+% %legend('LQR_step_response')
 
 
 %%
 % open loop bode diagram
-% bode(sys,[0.1 1])
-% grid on
 
-[Gm, Pm, Wcg,Wcp] = margin(sys)
-
-Ts_bode = (20*Wcp)^-1;
-% which diagram? bode, nichols, nyquist?
-% which frequency needs to be taken? cross pulsation or oscillation
-% pulsation
-% which are the  units for "20"?
-
-sysclosed = feedback(sys,1)
-sysd = c2d(sys,3);
-figure(1);clf;
-step(sysd)
-hold on 
-step(sysclosed)
-legend({'dis' 'cont'})
-
+sysd = c2d(sys,3); %discrete-time open loop system
 
 figure(2);clf;
-nichols(sys)
-hold on
-nichols(sysd)
+bode(sys)
+hold on 
+bode(sysd)
+grid on
+
+[Gm, Pm, Wcg,Wcp] = margin(sysd)
+
+Nyq = Wcg /(2*pi); %[Hz]
+
+Ts_bode = 1/(20*Nyq)
 
 
+
+
+
+
+
+
+
+
+
+
+
+% which diagram? bode, nichols, nyquist?
+% which frequency needs to be taken? cross pulsation or oscillation pulsation?
+% which are the  units for "20"?
+
+% sysclosed = feedback(sys,1)
+% figure(1);clf;
+% step(sysd)
+% hold on 
+% step(sysclosed)
+% legend({'dis' 'cont'})
+
+
+% figure(3);clf;
+% nichols(sys)
+% hold on
+% nichols(sysd)
+% hold on
+% nichols(sys_cl)
+% 
+% figure(4);clf;
+% nyquist(sys)
+% hold on
+% nyquist(sysd)
+% hold on
+% nyquist(sys_cl)
+
+% rng("default")
+% sys = rss(5);
+% h = nyquistplot(sys_cl);
+% setoptions(h,'PhaseUnits','rad','Grid','on');
+% h
 
