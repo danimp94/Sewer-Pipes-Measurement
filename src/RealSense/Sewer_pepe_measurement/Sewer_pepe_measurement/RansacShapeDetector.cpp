@@ -73,7 +73,6 @@ int main(int argc, char **argv)
         }
 
         index++;
-    }
 
     Vec3f checkMax(-500, -500, -500);
     Vec3f checkMin(500, 500, 500);

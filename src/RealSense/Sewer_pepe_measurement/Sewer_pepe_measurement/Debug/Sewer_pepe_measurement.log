@@ -1,5 +1,4 @@
-﻿  ransac.cpp
-  RansacShapeDetector.cpp
+﻿  RansacShapeDetector.cpp
 C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(69,25): warning C4244: 'argument' : conversion de 'const _Ty' en 'float', perte possible de données
           with
           [
@@ -15,7 +14,12 @@ C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe
           [
               _Ty=double
           ]
-C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(83,30): error C2065: 'pc' : identificateur non déclaré
-C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(83,34): error C2447: '{' : en-tête de fonction manquant (liste formelle à l'ancien format ?)
-C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(161,1): fatal error C1004: fin de fichier inattendue rencontrée
-  Génération de code en cours...
+C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(117,33): warning C4305: '=' : troncation de 'double' à 'float'
+C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(119,38): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(152,42): error C2065: 'cyl' : identificateur non déclaré
+C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(152,66): error C2065: 'angDir' : identificateur non déclaré
+C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(152,86): error C2065: 'angDir' : identificateur non déclaré
+C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(152,106): error C2065: 'angDir' : identificateur non déclaré
+C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(153,26): error C2065: 'Y' : identificateur non déclaré
+C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(153,41): error C2065: 'Y' : identificateur non déclaré
+C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(153,56): error C2065: 'Y' : identificateur non déclaré
