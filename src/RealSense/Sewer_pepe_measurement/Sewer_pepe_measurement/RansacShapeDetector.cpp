@@ -1,10 +1,6 @@
 #include <PointCloud.h>
 #include <RansacShapeDetector.h>
-#include <PlanePrimitiveShapeConstructor.h>
 #include <CylinderPrimitiveShapeConstructor.h>
-#include <SpherePrimitiveShapeConstructor.h>
-#include <ConePrimitiveShapeConstructor.h>
-#include <TorusPrimitiveShapeConstructor.h>
 
 #include <algorithm>
 #include <string>
@@ -131,11 +127,7 @@ int main(int argc, char **argv)
 	RansacShapeDetector detector(ransacOptions); // the detector object
 
 	// set which primitives are to be detected by adding the respective constructors
-    /*detector.Add(new PlanePrimitiveShapeConstructor());
-    detector.Add(new SpherePrimitiveShapeConstructor());*/
     detector.Add(new CylinderPrimitiveShapeConstructor());
-    /*detector.Add(new ConePrimitiveShapeConstructor());
-    detector.Add(new TorusPrimitiveShapeConstructor());*/
 
 	MiscLib::Vector< std::pair< MiscLib::RefCountPtr< PrimitiveShape >, size_t > > shapes; // stores the detected shapes
 	size_t remaining = detector.Detect(pc, 0, pc.size(), &shapes); // run detection
