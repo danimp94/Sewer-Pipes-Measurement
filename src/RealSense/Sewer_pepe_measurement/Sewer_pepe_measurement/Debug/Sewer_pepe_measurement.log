@@ -1,3 +1,21 @@
 ﻿  ransac.cpp
-ransac.obj : error LNK2019: symbole externe non résolu "public: __thiscall PointCloud::PointCloud(void)" (??0PointCloud@@QAE@XZ) référencé dans la fonction _main
-C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Debug\Sewer_pepe_measurement.exe : fatal error LNK1120: 1 externes non résolus
+  RansacShapeDetector.cpp
+C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(69,25): warning C4244: 'argument' : conversion de 'const _Ty' en 'float', perte possible de données
+          with
+          [
+              _Ty=double
+          ]
+C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(68,25): warning C4244: 'argument' : conversion de 'const _Ty' en 'float', perte possible de données
+          with
+          [
+              _Ty=double
+          ]
+C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(67,31): warning C4244: 'argument' : conversion de 'const _Ty' en 'float', perte possible de données
+          with
+          [
+              _Ty=double
+          ]
+C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(83,30): error C2065: 'pc' : identificateur non déclaré
+C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(83,34): error C2447: '{' : en-tête de fonction manquant (liste formelle à l'ancien format ?)
+C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\RansacShapeDetector.cpp(161,1): fatal error C1004: fin de fichier inattendue rencontrée
+  Génération de code en cours...
