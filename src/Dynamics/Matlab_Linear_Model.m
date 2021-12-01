@@ -115,17 +115,22 @@ sys_cl= ss(Ac,Bc,Cc,Dc)
 %%
 % open loop bode diagram
 
-sysd = c2d(sys,3); %discrete-time open loop system
+sysd = c2d(sys,0.5); %discrete-time open loop system
+sys_cld = c2d(sys_cl,0.5);
 
 figure(2);clf;
 bode(sys)
 hold on 
 bode(sysd)
+hold on 
+bode(sys_cl)
+hold on 
+bode(sys_cld)
 grid on
 
 [Gm, Pm, Wcg,Wcp] = margin(sysd)
 
-Nyq = Wcg /(2*pi); %[Hz]
+Nyq = Wcp /(2*pi); %[Hz]
 
 Ts_bode = 1/(20*Nyq)
 
@@ -142,19 +147,23 @@ Ts_bode = 1/(20*Nyq)
 % legend({'dis' 'cont'})
 
 
-% figure(3);clf;
-% nichols(sys)
-% hold on
-% nichols(sysd)
-% hold on
-% nichols(sys_cl)
-% 
-% figure(4);clf;
-% nyquist(sys)
-% hold on
-% nyquist(sysd)
-% hold on
-% nyquist(sys_cl)
+figure(3);clf;
+nichols(sys)
+hold on
+nichols(sysd)
+hold on
+nichols(sys_cl)
+hold on
+nichols(sys_cld)
+
+figure(4);clf;
+nyquist(sys)
+hold on
+nyquist(sysd)
+hold on
+nyquist(sys_cl)
+hold on
+nyquist(sys_cld)
 
 % rng("default")
 % sys = rss(5);
