@@ -6,5 +6,3 @@ int main() {
     PointCloud pc;
     return 0;
 }
-
-#dkqlmcks
