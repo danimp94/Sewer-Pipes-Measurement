@@ -16,7 +16,7 @@ circ = pyrsc.Circle()
 # convert Open3D.o3d.geometry.PointCloud to numpy array (RANSAC needs a numpy array to work)
 xyz_load = np.asarray(pcd_imp.points)
 # RANSAC implementation for circular shape detection in point clouds
-center, axis, radius, inliers = circ.fit(xyz_load, thresh=0.05, maxIteration=300)
+center, axis, radius, inliers = circ.fit(xyz_load, thresh=0.05, maxIteration=50)
 print(radius*2000)
 
 # Select the inliers and the outliers points
