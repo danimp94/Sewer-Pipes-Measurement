@@ -130,17 +130,6 @@ Nyq = Wcg /(2*pi); %[Hz]
 Ts_bode = 1/(20*Nyq)
 
 
-
-
-
-
-
-
-
-
-
-
-
 % which diagram? bode, nichols, nyquist?
 % which frequency needs to be taken? cross pulsation or oscillation pulsation?
 % which are the  units for "20"?
