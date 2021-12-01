@@ -1,0 +1,3 @@
+﻿  ransac.cpp
+ransac.obj : error LNK2019: symbole externe non résolu "public: __thiscall PointCloud::PointCloud(void)" (??0PointCloud@@QAE@XZ) référencé dans la fonction _main
+C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Debug\Sewer_pepe_measurement.exe : fatal error LNK1120: 1 externes non résolus
