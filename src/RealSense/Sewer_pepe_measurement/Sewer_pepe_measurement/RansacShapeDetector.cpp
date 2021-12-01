@@ -154,7 +154,6 @@ int main(int argc, char **argv)
             os << shape.second << " " << cyl->Height() << " " << angDir[0] << " " << angDir[1] << " " << angDir[2]; // Write support for the cylinder
             os << " " << Y[0] << " " << Y[1] << " " << Y[2] << " ";
             shape.first->Serialize(&os, false);
-
         }
     }
 
