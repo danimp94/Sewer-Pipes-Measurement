@@ -119,7 +119,7 @@ int main(int argc, char **argv)
 	ransacOptions.m_bitmapEpsilon = .02 * pc.getScale(); // set bitmap resolution to .02f of bounding box width
 		// NOTE: This threshold is NOT multiplied internally!
 	ransacOptions.m_normalThresh = 0.9f; // this is the cos of the maximal normal deviation
-	ransacOptions.m_minSupport = 500; // this is the minimal numer of points required for a primitive
+	ransacOptions.m_minSupport = 500; // this is the minimal number of points required for a primitive
 	ransacOptions.m_probability = .01f; // this is the "probability" with which a primitive is overlooked
     ransacOptions.m_fitting = RansacShapeDetector::Options::LS_FITTING;
 
@@ -145,10 +145,12 @@ int main(int argc, char **argv)
     std::ostream os(&fb);
     os << "Support Height AngDir[0] AngDir[1] AngDir[2] YDir[0] YDir[1] YDir[2] Identifier axisDir[0] axisDir[1] axisDir[2] axisPos[0], axisPos[1] axisPos[2] radius angularRotatedRadians" << std::endl;
     
+    int angDir[3];
+    int Y[3];
 
     for (const auto& shape : shapes) {
         if (shape.first->Identifier() == 2) { // 2 equals "Cylinder" type
-		
+
             os << shape.second << " " << cyl->Height() << " " << angDir[0] << " " << angDir[1] << " " << angDir[2]; // Write support for the cylinder
             os << " " << Y[0] << " " << Y[1] << " " << Y[2] << " ";
             shape.first->Serialize(&os, false);
