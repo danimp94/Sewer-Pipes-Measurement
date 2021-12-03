@@ -1,6 +1,6 @@
-#include <PointCloud.h>
-#include <RansacShapeDetector.h>
-#include <CylinderPrimitiveShapeConstructor.h>
+#include "lib/PointCloud.h"
+#include "lib/RansacShapeDetector.h"
+#include "lib/CylinderPrimitiveShapeConstructor.h"
 
 #include <algorithm>
 #include <string>
@@ -144,14 +144,22 @@ int main(int argc, char **argv)
     fb.open(outputFilePath, std::ios::out);
     std::ostream os(&fb);
     os << "Support Height AngDir[0] AngDir[1] AngDir[2] YDir[0] YDir[1] YDir[2] Identifier axisDir[0] axisDir[1] axisDir[2] axisPos[0], axisPos[1] axisPos[2] radius angularRotatedRadians" << std::endl;
-    
-    int angDir[3];
-    int Y[3];
 
     for (const auto& shape : shapes) {
         if (shape.first->Identifier() == 2) { // 2 equals "Cylinder" type
+            const PrimitiveShape* genShape = shape.first;
+            const CylinderPrimitiveShape* cyl = static_cast<const CylinderPrimitiveShape*>(genShape);
 
-            os << shape.second << " " << cyl->Height() << " " << angDir[0] << " " << angDir[1] << " " << angDir[2]; // Write support for the cylinder
+            Vec3f G = cyl->Internal().AxisPosition();
+            Vec3f N = cyl->Internal().AxisDirection();
+            Vec3f X = cyl->Internal().AngularDirection();
+            Vec3f Y = N.cross(X);
+            float r = cyl->Internal().Radius();
+            float hMin = cyl->MinHeight();
+            float hMax = cyl->MaxHeight();
+            float h = hMax - hMin;
+
+            os << shape.second << " " << cyl->Height() << " " << X[0] << " " << X[1] << " " << X[2]; // Write support for the cylinder
             os << " " << Y[0] << " " << Y[1] << " " << Y[2] << " ";
             shape.first->Serialize(&os, false);
         }
