@@ -2,8 +2,8 @@
 #define PRIMITIVESHAPECONSTRUCTOR_HEADER
 #include "PrimitiveShape.h"
 #include "PointCloud.h"
-#include <MiscLib/RefCount.h>
-#include <MiscLib/Vector.h>
+#include "MiscLib/RefCount.h"
+#include "MiscLib/Vector.h"
 #include <istream>
 #include <stdio.h>
 

@@ -5,13 +5,13 @@
 #include "MiscLib/Vector.h"
 #include <algorithm>
 #include <istream>
-#include <MiscLib/Performance.h>
-#include <GfxTL/MathHelper.h>
-#include <GfxTL/IndexedIterator.h>
+#include "MiscLib/Performance.h"
+#include "GfxTL/MathHelper.h"
+#include "GfxTL/IndexedIterator.h"
 #include "IndexIterator.h"
-#include <MiscLib/Pair.h>
+#include "MiscLib/Pair.h"
 #ifdef DOPARALLEL
-#include <omp.h>
+#include "omp.h"
 #endif
 
 #ifndef DLL_LINKAGE
