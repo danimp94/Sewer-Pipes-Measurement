@@ -2,13 +2,13 @@
 #define MiscLib__ALIGNEDALLOCATOR_HEADER__
 #include <memory>
 #ifndef __APPLE__
-#include <malloc.h>
+#include "malloc.h"
 #else
-#include <stdlib.h>
+#include "stdlib.h"
 #endif
 
 #if defined(__x86_64__) || defined(__i386__) || defined(_M_IX86) || defined(_M_X64)
-#include <xmmintrin.h>
+#include "xmmintrin.h"
 #endif
 
 #ifdef _mm_malloc

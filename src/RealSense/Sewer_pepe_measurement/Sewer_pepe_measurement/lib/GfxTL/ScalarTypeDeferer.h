@@ -2,7 +2,7 @@
 #define GfxTL__SCALARTYPEDEFERER_HEADER__
 #include "VectorXD.h"
 #include "Array.h"
-#include "../MiscLib/Vector.h>"
+#include "Vector.h"
 #include <vector>
 #include <memory>
 
