@@ -1,2 +1,0 @@
-  LQR_Model_1_input.cpp
-
