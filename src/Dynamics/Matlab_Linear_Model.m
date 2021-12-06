@@ -75,7 +75,7 @@ x0 = [pi/8;0]; % Initial conditions
 u0 = [-m2*g*(l2f+l3o-l3f)] % Initial Input
 
 % LQR
-Q = eye(size(C,1))*1;
+Q = [12 0;0 1];
 %Q(1,1) = 1e-6;
 %Q(2,2) = 1e-6;
 %Q = C'*C;
@@ -113,61 +113,61 @@ sys_cl= ss(Ac,Bc,Cc,Dc)
 
 
 %%
-% open loop bode diagram
-
-sysd = c2d(sys,0.5); %discrete-time open loop system
-sys_cld = c2d(sys_cl,0.5);
-
-figure(2);clf;
-bode(sys)
-hold on 
-bode(sysd)
-hold on 
-bode(sys_cl)
-hold on 
-bode(sys_cld)
-grid on
-
-[Gm, Pm, Wcg,Wcp] = margin(sysd)
-
-Nyq = Wcp /(2*pi); %[Hz]
-
-Ts_bode = 1/(20*Nyq)
-
-
-% which diagram? bode, nichols, nyquist?
-% which frequency needs to be taken? cross pulsation or oscillation pulsation?
-% which are the  units for "20"?
-
-% sysclosed = feedback(sys,1)
-% figure(1);clf;
-% step(sysd)
+% % open loop bode diagram
+% 
+% sysd = c2d(sys,0.5); %discrete-time open loop system
+% sys_cld = c2d(sys_cl,0.5);
+% 
+% figure(2);clf;
+% bode(sys)
 % hold on 
-% step(sysclosed)
-% legend({'dis' 'cont'})
-
-
-figure(3);clf;
-nichols(sys)
-hold on
-nichols(sysd)
-hold on
-nichols(sys_cl)
-hold on
-nichols(sys_cld)
-
-figure(4);clf;
-nyquist(sys)
-hold on
-nyquist(sysd)
-hold on
-nyquist(sys_cl)
-hold on
-nyquist(sys_cld)
-
-% rng("default")
-% sys = rss(5);
-% h = nyquistplot(sys_cl);
-% setoptions(h,'PhaseUnits','rad','Grid','on');
-% h
-
+% bode(sysd)
+% hold on 
+% bode(sys_cl)
+% hold on 
+% bode(sys_cld)
+% grid on
+% 
+% [Gm, Pm, Wcg,Wcp] = margin(sysd)
+% 
+% Nyq = Wcp /(2*pi); %[Hz]
+% 
+% Ts_bode = 1/(20*Nyq)
+% 
+% 
+% % which diagram? bode, nichols, nyquist?
+% % which frequency needs to be taken? cross pulsation or oscillation pulsation?
+% % which are the  units for "20"?
+% 
+% % sysclosed = feedback(sys,1)
+% % figure(1);clf;
+% % step(sysd)
+% % hold on 
+% % step(sysclosed)
+% % legend({'dis' 'cont'})
+% 
+% 
+% figure(3);clf;
+% nichols(sys)
+% hold on
+% nichols(sysd)
+% hold on
+% nichols(sys_cl)
+% hold on
+% nichols(sys_cld)
+% 
+% figure(4);clf;
+% nyquist(sys)
+% hold on
+% nyquist(sysd)
+% hold on
+% nyquist(sys_cl)
+% hold on
+% nyquist(sys_cld)
+% 
+% % rng("default")
+% % sys = rss(5);
+% % h = nyquistplot(sys_cl);
+% % setoptions(h,'PhaseUnits','rad','Grid','on');
+% % h
+% 
