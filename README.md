@@ -4,6 +4,6 @@ This project researches a solution for measuring the diameter of sewer pipes in 
 
 ## Table of contents
 
-- Dynamics model using Matlab and Simulink: [Dynamics](src/Dynamics/)
-- RealSense D435i RANSAC implementation: [RealSense](src/RealSense/)
-- Linear Actuator Control: [LA_Control](src/LA_Control/)
+- Dynamics model using Matlab and Simulink: [Dynamics](src/dynamics/)
+- RealSense D435i RANSAC implementation: [RealSense](src/realsense-ransac/)
+- Linear Actuator Control: [LA_Control](src/linear-actuator/)
