@@ -59,14 +59,15 @@ n = length(A);
 
 % Output matrix
 
-x0 = [pi/4;0]; % Initial conditions
+x0 = [pi/8;0]; % Initial conditions
 u0 = [-m2*g*(l2f+l3o-l3f)] % Initial Input
 
 % LQR
-%Q = eye(size(C,1))*1;
-Q = [1 0;  % Penalize angular error
-     0 4]; % Penalize angular rate
-R = 2;     % Penalize thruster effort
+Q = [12 0;0 1];
+%Q(1,1) = 1e-6;
+%Q(2,2) = 1e-6;
+%Q = C'*C;
+R = 1;
 K = lqr(A,B,Q,R);
 
 % Closed loop system
