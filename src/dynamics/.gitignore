@@ -1,35 +1,31 @@
-# Windows thumbnail cache files
-Thumbs.db
-Thumbs.db:encryptable
-ehthumbs.db
-ehthumbs_vista.db
+# Windows default autosave extension
+*.asv
 
-# Dump file
-*.stackdump
+# OSX / *nix default autosave extension
+*.m~
 
-# Folder config file
-[Dd]esktop.ini
+# Compiled MEX binaries (all platforms)
+*.mex*
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+# Packaged app and toolbox files
+*.mlappinstall
+*.mltbx
 
-# Windows Installer files
-*.cab
-*.msi
-*.msix
-*.msm
-*.msp
+# Generated helpsearch folders
+helpsearch*/
 
-# Windows shortcuts
-*.lnk
+# Simulink code generation folders
+slprj/
+sccprj/
 
-# Visual Studio
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-*.code-workspace
+# Matlab code generation folders
+codegen/
 
-# Local History for Visual Studio Code
-.history/
+# Simulink autosave extension
+*.autosave
+
+# Simulink cache files
+*.slxc
+
+# Octave session info
+octave-workspace
