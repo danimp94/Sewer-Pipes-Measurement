@@ -1,2 +1,2 @@
 
-![image info](data/sleep-cycles-example.jpg)
+![image info](data/Fritzing/LA_scheme_bb.png)
