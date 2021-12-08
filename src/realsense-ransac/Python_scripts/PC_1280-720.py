@@ -50,10 +50,10 @@ depth_image = np.asanyarray(depth_frame.get_data())
 timestamp = date.now().strftime("%Y-%m-%d-%H-%M")
 
 # save both images (the name is changed each time using the timestamp in order to save all the images)
-imageio.imwrite("depth"+timestamp+".png", depth_image)
+imageio.imwrite("Output/DepthImage/depth"+timestamp+".png", depth_image)
 
 # Get back the images
-depth_raw = o3d.io.read_image("depth"+timestamp+".png")
+depth_raw = o3d.io.read_image("Output/DepthImage/depth"+timestamp+".png")
 
 # Get the default intrinsic parameters of the camera
 p = o3d.camera.PinholeCameraIntrinsic(o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault)
@@ -67,11 +67,11 @@ pcd = o3d.geometry.PointCloud.create_from_depth_image(
 pcd.transform([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])
 
 # Save the point cloud
-o3d.io.write_point_cloud("cloud"+timestamp+".ply", pcd)
+o3d.io.write_point_cloud("Output/PointCloud/cloud"+timestamp+".ply", pcd)
 # Get back the point cloud
-pcd_load = o3d.io.read_point_cloud("cloud"+timestamp+".ply")
+pcd_load = o3d.io.read_point_cloud("Output/PointCloud/cloud"+timestamp+".ply")
 
-p = subprocess.Popen(['RansacShapeAligner/out/build/x64-Debug/main', '-f', "cloud"+timestamp+".ply"], stdout=PIPE, stdin=PIPE, shell=True) 
-#result = p.stdout.readline().strip()
-#print(result) 
+p = subprocess.Popen(['main', '-f', 'Output/PointCloud/cloud'+timestamp+'.ply'], stdout=PIPE, stdin=PIPE, shell=True) 
+result = p.stdout.readline().strip()
+print(result) 
 
