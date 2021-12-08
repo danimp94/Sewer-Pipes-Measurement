@@ -123,10 +123,6 @@ print(radius*2000)
 inlier_cloud = pcd_load2.select_by_index(inliers)
 outlier_cloud = pcd_load2.select_by_index(inliers, invert=True)
 
-# Paint the inliers points in red and the rest in grey
-inlier_cloud.paint_uniform_color([1, 0, 0])
-outlier_cloud.paint_uniform_color([0.6, 0.6, 0.6])
-
 # Merge the two point clouds
 # Save the data structure
 inlier_np = np.asarray(inlier_cloud.points)
