@@ -1,2 +1,0 @@
-﻿  RansacShapeDetector.cpp
-C:\Users\lucas\Documents\GitHub\Sewer-Pipes-Measurement\src\RealSense\Sewer_pepe_measurement\Sewer_pepe_measurement\lib\GfxTL\ScalarTypeDeferer.h(5,10): fatal error C1083: Impossible d'ouvrir le fichier include : '../MiscLib/Vector.h>' : No such file or directory
