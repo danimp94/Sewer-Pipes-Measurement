@@ -16,7 +16,7 @@ print("Environment Ready")
 # Change resolution here
 pipe = rs.pipeline()
 cfg = rs.config()
-cfg.enable_stream(rs.stream.depth,848, 480)
+cfg.enable_stream(rs.stream.depth, 1280, 720)
 
 #Start streaming
 pipe.start(cfg)
@@ -58,7 +58,7 @@ depth_raw = o3d.io.read_image("depth"+timestamp+".png")
 # Get the default intrinsic parameters of the camera
 p = o3d.camera.PinholeCameraIntrinsic(o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault)
 # Change the intrinsic parameters of the camera to match the chosen resolution
-p.intrinsic_matrix=[[421.139, 0.0, 426.176], [ 0.0, 421.139, 237.017], [ 0.0, 0.0, 1.0]] # 848*480 resolution
+p.intrinsic_matrix=[[635.682, 0.0, 643.285], [ 0.0, 635.682, 355.427], [ 0.0, 0.0, 1.0]] #1280*720 resolution
 # Create the point cloud from the rgbd image
 pcd = o3d.geometry.PointCloud.create_from_depth_image(
     depth_raw,p)
@@ -74,3 +74,4 @@ pcd_load = o3d.io.read_point_cloud("cloud"+timestamp+".ply")
 p = subprocess.Popen(['RansacShapeAligner/out/build/x64-Debug/main', '-f', "cloud"+timestamp+".ply"], stdout=PIPE, stdin=PIPE, shell=True) 
 #result = p.stdout.readline().strip()
 #print(result) 
+

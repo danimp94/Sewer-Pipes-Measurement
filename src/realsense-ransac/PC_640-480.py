@@ -17,7 +17,6 @@ print("Environment Ready")
 pipe = rs.pipeline()
 cfg = rs.config()
 cfg.enable_stream(rs.stream.depth,640, 480)
-cfg.enable_stream(rs.stream.color, 640, 480)
 
 #Start streaming
 pipe.start(cfg)
