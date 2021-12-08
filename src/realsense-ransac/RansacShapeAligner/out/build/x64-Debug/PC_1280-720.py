@@ -71,7 +71,7 @@ o3d.io.write_point_cloud("Output/PointCloud/cloud"+timestamp+".ply", pcd)
 # Get back the point cloud
 pcd_load = o3d.io.read_point_cloud("Output/PointCloud/cloud"+timestamp+".ply")
 
-p = subprocess.Popen(['main', '-f', "cloud"+timestamp+".ply"], stdout=PIPE, stdin=PIPE, shell=True) 
-#result = p.stdout.readline().strip()
-#print(result) 
+p = subprocess.Popen(['main', '-f', 'Output/PointCloud/cloud'+timestamp+'.ply'], stdout=PIPE, stdin=PIPE, shell=True) 
+result = p.stdout.readline().strip()
+print(result) 
 
