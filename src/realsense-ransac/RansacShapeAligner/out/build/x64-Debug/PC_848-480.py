@@ -9,8 +9,19 @@ from datetime import datetime as date     # Library use to get the actual date a
 import subprocess
 from subprocess import Popen, PIPE
 import os
+import gpio
+import time
 print("Environment Ready")
 
+# Pin Definitons:
+actuator = 4 # Broadcom pin 4 (pin 7 on pi)
+
+# Pin Setup:
+gpio.setmode(gpio.BCM) # Broadcom pin-numbering scheme
+gpio.setup(actuator, gpio.OUT) # LED pin set as output
+
+# 3.3v on pin 7 pi:
+gpio.output(actuator, gpio.HIGH)
 
 # Configure depth and color streams
 # Change resolution here
@@ -73,4 +84,9 @@ pcd_load = o3d.io.read_point_cloud("Output/PointCloud/cloud"+timestamp+".ply")
 
 p = subprocess.Popen(['main', '-f', 'Output/PointCloud/cloud'+timestamp+'.ply'], stdout=PIPE, stdin=PIPE, shell=True) 
 result = p.stdout.readline().strip()
-print(result) 
+print(result)
+
+# 0v on pin 7 pi:
+gpio.output(actuator, gpio.LOW)
+
+gpio.cleanup() # cleanup all GPIO
