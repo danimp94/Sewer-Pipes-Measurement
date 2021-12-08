@@ -9,7 +9,7 @@ from datetime import datetime as date     # Library use to get the actual date a
 import subprocess
 from subprocess import Popen, PIPE
 import os
-import gpio
+import RPi.GPIO as GPIO
 import time
 print("Environment Ready")
 
@@ -17,11 +17,11 @@ print("Environment Ready")
 actuator = 4 # Broadcom pin 4 (pin 7 on pi)
 
 # Pin Setup:
-gpio.setmode(gpio.BCM) # Broadcom pin-numbering scheme
-gpio.setup(actuator, gpio.OUT) # LED pin set as output
+GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
+GPIO.setup(actuator, GPIO.OUT) # LED pin set as output
 
 # 3.3v on pin 7 pi:
-gpio.output(actuator, gpio.HIGH)
+GPIO.output(actuator, GPIO.HIGH)
 
 # Configure depth and color streams
 # Change resolution here
@@ -87,6 +87,6 @@ result = p.stdout.readline().strip()
 print(result)
 
 # 0v on pin 7 pi:
-gpio.output(actuator, gpio.LOW)
+GPIO.output(actuator, GPIO.LOW)
 
-gpio.cleanup() # cleanup all GPIO
+GPIO.cleanup() # cleanup all GPIO
