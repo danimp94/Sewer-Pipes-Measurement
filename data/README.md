@@ -1,2 +1,2 @@
 
-![image info](/data/fritzing/LA_scheme_bb.png)
+![image info](/data/fritzing/Full_Scheme.png)
