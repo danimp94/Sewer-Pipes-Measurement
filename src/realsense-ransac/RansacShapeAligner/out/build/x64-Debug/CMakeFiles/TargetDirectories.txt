@@ -1,0 +1,4 @@
+C:/Users/lucas/Downloads/RansacShapeAligner/out/build/x64-Debug/CMakeFiles/libransac.dir
+C:/Users/lucas/Downloads/RansacShapeAligner/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+C:/Users/lucas/Downloads/RansacShapeAligner/out/build/x64-Debug/CMakeFiles/main.dir
+C:/Users/lucas/Downloads/RansacShapeAligner/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
