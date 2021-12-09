@@ -39,9 +39,9 @@ for x in range(5):pipe.wait_for_frames()
 profile = pipe.get_active_profile()
 
 # Change the type of stereo vision
-device = profile.get_device()
-depth_sensor = device.query_sensors()[0]
-depth_sensor.set_option(rs.option.emitter_enabled, 1.0)
+#device = profile.get_device()
+#depth_sensor = device.query_sensors()[0]
+#depth_sensor.set_option(rs.option.emitter_enabled, 1.0)
 
 # Store frameset
 frameset = pipe.wait_for_frames()
