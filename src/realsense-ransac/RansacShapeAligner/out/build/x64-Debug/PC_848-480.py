@@ -6,9 +6,6 @@ import imageio
 import cv2
 import pyransac3d as pyrsc                # open3d librairie to use RANSAC for different shapes
 from datetime import datetime as date     # Library use to get the actual date and time
-import subprocess
-from subprocess import Popen, PIPE
-import os
 import RPi.GPIO as GPIO
 import time
 print("Environment Ready")
@@ -81,10 +78,6 @@ pcd.transform([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])
 o3d.io.write_point_cloud("Output/PointCloud/cloud"+timestamp+".ply", pcd)
 # Get back the point cloud
 pcd_load = o3d.io.read_point_cloud("Output/PointCloud/cloud"+timestamp+".ply")
-
-p = subprocess.Popen(['main', '-f', 'Output/PointCloud/cloud'+timestamp+'.ply'], stdout=PIPE, stdin=PIPE, shell=True) 
-result = p.stdout.readline().strip()
-print(result)
 
 # 0v on pin 7 pi:
 GPIO.output(actuator, GPIO.LOW)
