@@ -30,7 +30,7 @@ profile = pipe.get_active_profile()
 # Change the type of stereo vision
 device = profile.get_device()
 depth_sensor = device.query_sensors()[0]
-depth_sensor.set_option(rs.option.emitter_enabled, 1.0)
+depth_sensor.set_option(rs.option.emitter_enabled, 0.0)
 
 # Store frameset
 frameset = pipe.wait_for_frames()
@@ -60,7 +60,7 @@ profile2 = pipe.get_active_profile()
 # Change the type of stereo vision
 device2 = profile2.get_device()
 depth_sensor2 = device2.query_sensors()[0]
-depth_sensor2.set_option(rs.option.emitter_enabled, 0.0)
+depth_sensor2.set_option(rs.option.emitter_enabled, 1.0)
 
 # Store frameset
 frameset2 = pipe.wait_for_frames()
@@ -116,7 +116,7 @@ circ = pyrsc.Circle()
 # convert Open3D.o3d.geometry.PointCloud to numpy array (RANSAC needs a numpy array to work)
 xyz_load = np.asarray(pcd_load2.points)
 # RANSAC implementation for circular shape detection in point clouds
-center, axis, radius, inliers = circ.fit(xyz_load, thresh=0.03, maxIteration=150)
+center, axis, radius, inliers = circ.fit(xyz_load, thresh=0.03, maxIteration=300)
 print(radius*2000)
 
 # Select the inliers and the outliers points
