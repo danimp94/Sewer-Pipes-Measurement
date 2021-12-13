@@ -19,6 +19,8 @@ GPIO.setup(actuator, GPIO.OUT) # LED pin set as output
 
 # 3.3v on pin 7 pi:
 GPIO.output(actuator, GPIO.HIGH)
+time.sleep(10)
+print("sleep over")
 
 # Configure depth and color streams
 # Change resolution here
@@ -33,7 +35,7 @@ pipe.start(cfg)
 colorizer = rs.colorizer()
 
 # Skip 5 first frames to give the Auto-Exposure time to adjust
-for x in range(5):pipe.wait_for_frames()
+#for x in range(5):pipe.wait_for_frames()
 
 # Get intrinsic camera parameters
 profile = pipe.get_active_profile()
