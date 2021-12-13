@@ -20,7 +20,7 @@ GPIO.setup(actuator, GPIO.OUT) # LED pin set as output
 # 3.3v on pin 7 pi:
 GPIO.output(actuator, GPIO.HIGH)
 time.sleep(10)
-print("sleep over")
+print("Sleep Over")
 
 # Configure depth and color streams
 # Change resolution here
