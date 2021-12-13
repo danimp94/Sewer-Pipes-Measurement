@@ -19,6 +19,8 @@ GPIO.setup(actuator, GPIO.OUT) # LED pin set as output
 
 # 3.3v on pin 7 pi:
 GPIO.output(actuator, GPIO.HIGH)
+time.sleep(10)
+print("Sleep Over")
 
 # Configure depth and color streams
 # Change resolution here
@@ -33,7 +35,7 @@ pipe.start(cfg)
 colorizer = rs.colorizer()
 
 # Skip 5 first frames to give the Auto-Exposure time to adjust
-for x in range(5):pipe.wait_for_frames()
+#for x in range(5):pipe.wait_for_frames()
 
 # Get intrinsic camera parameters
 profile = pipe.get_active_profile()
@@ -76,8 +78,6 @@ pcd.transform([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])
 
 # Save the point cloud
 o3d.io.write_point_cloud("Output/PointCloud/cloud"+timestamp+".ply", pcd)
-# Get back the point cloud
-pcd_load = o3d.io.read_point_cloud("Output/PointCloud/cloud"+timestamp+".ply")
 
 # 0v on pin 7 pi:
 GPIO.output(actuator, GPIO.LOW)
