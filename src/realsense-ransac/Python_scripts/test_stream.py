@@ -26,7 +26,7 @@ import math
 import time
 import cv2
 import numpy as np
-import pyrealsense2 as rs
+import pyrealsense2.pyrealsense2 as rs
 
 class AppState:
 
@@ -84,7 +84,7 @@ pipeline.start(config)
 
 # Get stream profile and camera intrinsics
 profile = pipeline.get_active_profile()
-depth_profile = rs.video_stream_profile(profile.get_stream(rs.stream.depth))
+depth_profile = rs.video_stream_profile(profile.get_stream(rs.stream.color))
 depth_intrinsics = depth_profile.get_intrinsics()
 w, h = depth_intrinsics.width, depth_intrinsics.height
 
