@@ -76,8 +76,6 @@ pcd.transform([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])
 
 # Save the point cloud
 o3d.io.write_point_cloud("Output/PointCloud/cloud"+timestamp+".ply", pcd)
-# Get back the point cloud
-pcd_load = o3d.io.read_point_cloud("Output/PointCloud/cloud"+timestamp+".ply")
 
 # 0v on pin 7 pi:
 GPIO.output(actuator, GPIO.LOW)
