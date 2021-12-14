@@ -18,7 +18,7 @@ GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
 GPIO.setup(actuator, GPIO.OUT) # LED pin set as output
 
 # 3.3v on pin 7 pi:
-GPIO.output(actuator, GPIO.LOW)
+GPIO.output(actuator, GPIO.HIGH)
 time.sleep(10)
 print("Sleep Over")
 
