@@ -5,9 +5,12 @@
 
 ## Steps followed in this script
 
-* Download and unzip the dataset into its corresponding directory.
-* Load the `.txt` files.
-* Merge the files from each user into one dataframe.
-* Export the resulting dataframe to `.csv`.
-* Repeat the process for all the users.
-* Download all `.csv` files in `.zip` format.
+* Download and unzip the RansacShapeAligner folder
+* Open RansacShapeAligner folder
+* Open the main.cpp file and modify the desired parameters (threshold, resolution, required point for a primitive, …)
+* Open the CMakeLists.txt file and compile it
+* Open out/build/x64-Debug folder
+* Open the PowerShell window in that folder
+* Find a relevant point cloud of a cylinder that you want to analyse
+* Write ./main.exe -f PathToYourPointCloud
+* The results can be found in the file NameOfYourPointCloud-cylinders.txt
