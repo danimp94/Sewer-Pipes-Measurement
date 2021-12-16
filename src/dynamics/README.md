@@ -14,3 +14,7 @@ There are 2 Matlab scripts `.m` to initialize the parameters values before runni
 * Open and run Matlab file `.m`.
 * Open the respective simulink file `.slx`.
 * Play
+
+## Simulink Model Example 
+
+![image info](/data/diagrams/simulink/Simulink_1.png)
